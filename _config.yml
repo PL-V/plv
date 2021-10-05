@@ -20,7 +20,7 @@ timezone: Asia/Shanghai
 
 title: PLV-BLOG                          # the main title
 
-tagline: Some of my works   # it will display as the sub-title
+tagline: Some of my works and projects   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, portfolio, sidebar,
@@ -82,7 +82,7 @@ theme_mode:   # [light|dark]
 img_cdn: 'https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images@0a003683c0c3ca549d12c309f9b3e03ea20981e5'
 
 # the avatar on sidebar, support local or CORS resources
-avatar: '/commons/aaaaa.jpg'
+avatar: '/commons/avatar.jpg'
 
 # boolean type, the global switch for ToC in posts.
 toc: true
