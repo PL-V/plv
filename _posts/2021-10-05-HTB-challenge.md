@@ -7,8 +7,7 @@ tags: [htb, cracking]
 ---
 ## frag thath
 
-asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-
+hello mother fu cker are u fu cking kidding me so let's go and frag that before we get into that shit
 
 
 ## Reference
