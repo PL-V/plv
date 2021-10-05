@@ -1,5 +1,5 @@
 ---
-title: Enable Google Page Views
+title: Enable Google Page Views post
 author: Dinesh Prasanth Moluguwan Krishnamoorthy
 date: 2021-01-03 18:32:00 -0500
 categories: [Blogging, Tutorial]
