@@ -1,7 +1,7 @@
 # The Site Configuration
 
 # Import the theme
-theme: jekyll-theme-chirpy
+#theme: jekyll-theme-chirpy
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
@@ -18,7 +18,7 @@ timezone: Asia/Shanghai
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Chirpy                          # the main title
+title: PLV-BLOG                          # the main title
 
 tagline: A text-focused Jekyll theme   # it will display as the sub-title
 
@@ -31,10 +31,10 @@ description: >-                        # used by seo meta and the atom feed
 url: 'https://plv.github.io'
 
 github:
-  username: github_username             # change to your github username
+  username: PL-V             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username: PL-V            # change to your twitter username
 
 social:
   # Change to your full name.
