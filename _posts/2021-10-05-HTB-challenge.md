@@ -1,5 +1,5 @@
 ---
-title: "Emotet Analysis: Unpacking emotet part 1"
+title: Emotet Analysis Unpacking emotet part 1
 author: PlayerV
 date: 2022-04-02 18:32:00 -0500
 categories: [Reverse engeneering, Malware Research]
