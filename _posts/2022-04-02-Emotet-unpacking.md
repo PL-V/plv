@@ -23,6 +23,6 @@ It contains 4 sections
 
 Let's check import section
 
-![CFF-Explorer1](/assets/Emotet-Part1/Hex-View/3.png){: width="700" height="400" }
+![CFF-Explorer1](/assets/Emotet-part1/Hex-View/3.png){: width="700" height="400" }
 
 There is  
