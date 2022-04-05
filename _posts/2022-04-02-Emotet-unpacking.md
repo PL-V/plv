@@ -83,5 +83,23 @@ Another right click on the adress of the unpacked binary and `Dump memory to fil
 
 ![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
 
+Opening the unpacked binary in `X32dbg` shows that it's missed.  
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
+
+## Fixing
+
+To fix the unpacked binary there are several methods to do that, we will use `LordPE` to automate the fixing, so all we should do is to open  LordPe and click on options, then uncheck `Wipe Relocation` and `Rebuild ImportTable`, click on normal and finally ok
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/1.PNG){: width="700" height="300" }
+
+Drag your unpacked sample to `LordPe` and it will fix it.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/2.PNG){: width="700" height="300" }
+
+Finally open your fixed binary in `X32dbg` and notice that your it's more readble right now.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/3.PNG){: width="700" height="300" }
+
 
 
