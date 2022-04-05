@@ -25,11 +25,13 @@ Let's check import section
 
 ![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
 
-There is just one imported library which is Kernel32 that's the first sign which indicate that the binary could be packed, another indicator the two API functions
+There is just one imported library which is Kernel32 that's the first sign which indicate that the binary could be packed, another indicator the two API functions:
 
-1. VirtualAlloc 
-2. VirtualProtect
+1. [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) 
+2. [VirtualProtect](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotect)
 
 The VirtualAlloc function allocate memory and the VirtualProtect function changes the protection on a region of committed pages in the virtual address space, most of time those two functions are used by malware during the unpacking process. Let's open the binary on Die(Detect-It-Easy) to proof what we've said.
 
-![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Die/1.PNG){: width="700" height="500" }
+![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Die/1.PNG){: width="700" height="300" }
+
+The status bar says that it's 91% packed and we have a high entropy in the `.text` section.
