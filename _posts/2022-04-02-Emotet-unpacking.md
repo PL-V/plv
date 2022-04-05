@@ -33,4 +33,20 @@ The VirtualAlloc function allocate memory and the VirtualProtect function change
 The status bar says that it's 91% packed and we have a high entropy in the `.text` section, so that's a strong indication that the malware is packed and should be unpacked for further analysis.
 
 
-## Unpacking
+## IDA 
+
+Now that we're sure that our sample is packed, let's open it in IDA and find the function which is responsible for unpacking. 
+
+![IDA1](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/1.PNG){: width="700" height="300" }
+
+Click on `Imports` to reveal all the functions used by the binary.
+
+![IDA2](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/2.PNG){: width="700" height="300" }
+
+Double click on VirtualAlloc 
+
+![IDA3](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/3.PNG){: width="700" height="300" }
+
+VirtualAlloc function is used two times by the same function `sub_1001AFF0`, double click on `sub_1001AFF0` and scroll down we notice that the first function called after VirtualAlloc is `sub_10022C40`, so maybe we've find our unpacking function. to make sure let's open it on Xdbg and figure out. 
+
+
