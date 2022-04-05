@@ -25,6 +25,11 @@ Let's check import section
 
 ![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
 
-There is just one imported library which is Kernel32 that's the first sign which indicate that the binary could be packed, another indicator the two API functions VirtualAlloc and VirtualProtect, The VirtualAlloc function allocate memory and the VirtualProtect function changes the protection on a region of committed pages in the virtual address space, most of time those two functions are used by malware during the unpacking process. Let's open the binary on Die(Detect-It-Easy) to proof what we've said.
+There is just one imported library which is Kernel32 that's the first sign which indicate that the binary could be packed, another indicator the two API functions
 
-![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/3.PNG){: width="600" height="500" }
+1. VirtualAlloc 
+2. VirtualProtect
+
+The VirtualAlloc function allocate memory and the VirtualProtect function changes the protection on a region of committed pages in the virtual address space, most of time those two functions are used by malware during the unpacking process. Let's open the binary on Die(Detect-It-Easy) to proof what we've said.
+
+![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Die/1.PNG){: width="700" height="500" }
