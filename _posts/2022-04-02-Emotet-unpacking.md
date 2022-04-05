@@ -1,5 +1,5 @@
 ---
-title: "Emotet Analysis : unpacking part 1"
+title: "Emotet Analysis Part 1: Unpacking"
 author: Player-V
 date: 2022-04-02 02:26:00 -0500
 categories: [Reverse engeneering, Malware Analysis]
@@ -55,7 +55,7 @@ Open your `X32dbg` and paste the sample there for debugging.
 
 ![XDBG1](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/1.PNG){: width="700" height="300" }
 
-Make a breakpoint on VirtualAlloc and hit run.
+Place a breakpoint on VirtualAlloc and hit run.
 
 ![XDBG2](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/2.PNG){: width="700" height="300" }
 
@@ -66,3 +66,22 @@ Xdbg will keep running untill it hit the breakpoint, then click two times on `Ex
 Notice that the EAX register contain the address of the allocated memory, right click on that value and click on `Follow in Dump`.
 
 ![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/4.PNG){: width="700" height="300" }
+
+As we said earlier that the function after VirtualAlloc is responsible for unpacking, step ovet it and keep your eyes on the dump windows.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/6.PNG){: width="700" height="300" }
+
+After executing `sub_10022C40` function we can finally see our unpacked malware, dump it and save it somewhere in ur machine. 
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/7.PNG){: width="700" height="300" }
+
+Right click on dump windows and `Follow in memory map`.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/8.PNG){: width="700" height="300" }
+
+Another right click on the adress of the unpacked binary and `Dump memory to file`.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
+
+
+
