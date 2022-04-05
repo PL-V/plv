@@ -47,6 +47,8 @@ Double click on VirtualAlloc
 
 ![IDA3](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/3.PNG){: width="700" height="300" }
 
-VirtualAlloc function is used two times by the same function `sub_1001AFF0`, double click on `sub_1001AFF0` and scroll down we notice that the first function called after VirtualAlloc is `sub_10022C40`, so maybe we've find our unpacking function. to make sure let's open it on Xdbg and figure out. 
+VirtualAlloc function is used two times by the same function `sub_1001AFF0`, double click on `sub_1001AFF0` and scroll down notice that the first function called after VirtualAlloc is `sub_10022C40`, so maybe we've found our unpacking function. to make sure let's open it on `Xdbg` and figure out. 
+
+## Unpacking
 
 
