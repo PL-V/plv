@@ -15,14 +15,14 @@ That's will be my first post in the blog, i will make a series of post about Emo
 
 Opening the sample in CFF explorer shows that it's a 32 bit binary
 
-![CFF-Explorer1](../assets/Emotet-part1/Hex-View/1.png){: width="700" height="400" }
+![CFF-Explorer1](/assets/Emotet-part1/Hex-View/1.PNG){: width="700" height="400" }
 
 It contains 4 sections
 
-![CFF-Explorer1](../assets/Emotet-part1/Hex-View/2.png){: width="700" height="400" }
+![CFF-Explorer1](/assets/Emotet-part1/Hex-View/2.PNG){: width="700" height="400" }
 
 Let's check import section
 
-![CFF-Explorer1](../assets/Emotet-part1/Hex-View/3.png){: width="700" height="400" }
+![CFF-Explorer1](/assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="400" }
 
 There is  
