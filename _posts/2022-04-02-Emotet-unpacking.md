@@ -17,7 +17,7 @@ Opening the sample in CFF explorer shows that we're dealing with 32 bit binary.
 
 ![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/1.PNG){: width="700" height="400" }
 
-Let's check import section
+Let's check import section.
 
 ![CFF-Explorer3](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
 
@@ -43,7 +43,7 @@ Click on `Imports` to reveal all the functions used by the binary.
 
 ![IDA2](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/2.PNG){: width="700" height="300" }
 
-Double click on VirtualAlloc 
+Search for VirtualAlloc and double click on it.
 
 ![IDA3](https://pl-v.github.io/plv//assets/Emotet-part1/IDA/3.PNG){: width="700" height="300" }
 
@@ -51,4 +51,18 @@ VirtualAlloc function is used two times by the same function `sub_1001AFF0`, dou
 
 ## Unpacking
 
+Open your `X32dbg` and paste the sample there for debugging.
 
+![XDBG1](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/1.PNG){: width="700" height="300" }
+
+Make a breakpoint on VirtualAlloc and hit run.
+
+![XDBG2](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/2.PNG){: width="700" height="300" }
+
+Xdbg will keep running untill it hit the breakpoint, then click two times on `Execute till run`. 
+
+![XDBG3](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/3.PNG){: width="700" height="300" }
+
+Notice that the EAX register contain the address of the allocated memory, right click on that value and click on `Follow in Dump`.
+
+![XDBG4](https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/4.PNG){: width="700" height="300" }
