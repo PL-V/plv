@@ -16,7 +16,7 @@ That's will be my first post in the blog, i will make a series of posts about [E
 
 ## Triage
 
-The first thing i always do before opening a sample in IDA or Xdbg is opening the binary first in a hex editor, in my case i will use [CFF Explorer](https://ntcore.com/?page_id=388),so opening the sample in CFF explorer shows that we're dealing with 32 bit binary.
+The first thing i always do before opening a sample in `IDA` or `Xdbg` is opening the binary first in a hex editor, in my case i will use [CFF Explorer](https://ntcore.com/?page_id=388),so opening the sample in CFF explorer shows that we're dealing with 32 bit binary.
 
 ![CFF-Explorer1](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/1.PNG){: width="400" height="400" }
 
@@ -38,7 +38,7 @@ The status bar says that it's 91% packed and `.text` section has a high entropy,
 
 ## IDA 
 
-Now that we're sure that our sample is packed, let's open it in IDA and try to find the function which is responsible for unpacking. 
+Now that we're sure that our sample is packed, let's open it in `IDA` and try to find the function which is responsible for unpacking. 
 
 ![IDA1](https://pl-v.github.io/plv/assets/Emotet-part1/IDA/1.PNG){: width="700" height="300" }
 
@@ -62,7 +62,7 @@ Place a breakpoint on [VirtualAlloc](https://docs.microsoft.com/en-us/windows/wi
 
 ![XDBG2](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/2.PNG){: width="700" height="300" }
 
-Xdbg will keep running untill it hit the breakpoint, after  click two times on `Execute till run`. 
+`Xdbg` will keep running untill it hit the breakpoint, after  click two times on `Execute till run`. 
 
 ![XDBG3](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/3.PNG){: width="700" height="300" }
 
