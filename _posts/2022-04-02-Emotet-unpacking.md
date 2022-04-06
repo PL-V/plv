@@ -103,5 +103,9 @@ Finally open your fixed binary in `X32dbg` and notice that it's more readble rig
 
 ![XDBG4](https://pl-v.github.io/plv//assets/[Emotet](https://www.malwarebytes.com/emotet)-part1/Fixing/3.PNG){: width="700" height="300" }
 
+## Reference
+
+[](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters)
+
 
 
