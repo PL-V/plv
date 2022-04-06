@@ -10,13 +10,14 @@ tags: [unpacking, analysis]
 ## Introduction
 
 That's will be my first post in the blog, i will make a series of posts about [Emotet](https://www.malwarebytes.com/emotet).
+
 [Emotet](https://www.malwarebytes.com/emotet) is a Trojan that is primarily spread through spam emails (malspam), we're going to digg deep in the anlysis of this Trojan,the first part is about unpacking the malware then we will try to analyse the different modules and techniques used by the malware to compromise a machine, so fire up your virtual machine and let's start.
 
 ## Triage
 
 The first thing i always do before opening a sample in IDA or Xdbg is opening the binary first in a hex editor, in my case i will use [CFF Explorer](https://ntcore.com/?page_id=388),so opening the sample in CFF explorer shows that we're dealing with 32 bit binary.
 
-![CFF-Explorer1](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/1.PNG){: width="700" height="400" }
+![CFF-Explorer1](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/1.PNG){: width="400" height="400" }
 
 Let's check import section,The malware use one library which is `Kernel32` that's the first sign which indicate that we're dealing with packed binary.
 
