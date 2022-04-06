@@ -105,7 +105,7 @@ Finally open your fixed binary in `X32dbg` and notice that it's more readble rig
 
 ## Reference
 
-[sss](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters)
+[New Emotet 11/2021 - Reverse Engineering VBA Obfuscation + Unpacking Emotet](https://www.reverse-engineer.net/view/courses/training/329541-new-emotet-11-2021-reverse-engineering-vba-obfuscation-unpacking-emotet)
 
 
 
