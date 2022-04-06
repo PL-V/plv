@@ -16,11 +16,11 @@ That's will be my first post in the blog, i will make a series of posts about [E
 
 The first thing i always do before opening a sample in IDA or Xdbg is opening the binary first in a hex editor, in my case i will use [CFF Explorer](https://ntcore.com/?page_id=388),so opening the sample in CFF explorer shows that we're dealing with 32 bit binary.
 
-![CFF-Explorer1](https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/1.PNG){: width="700" height="400" }
+![CFF-Explorer1](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/1.PNG){: width="700" height="400" }
 
 Let's check import section,The malware use one library which is `Kernel32` that's the first sign which indicate that we're dealing with packed binary.
 
-![CFF-Explorer3]((https://pl-v.github.io/plv//assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
+![CFF-Explorer3]((https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
 
 Two intersting API functions are used:
 
@@ -29,7 +29,7 @@ Two intersting API functions are used:
 
 The [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) function allocate memory while the [VirtualProtect](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotect) function changes the protection on a region of committed pages in the virtual address space, most of time those two functions are used by malware during the unpacking process. To make sure that our sample is packed Let's open the binary on [Die(Detect-It-Easy)](https://github.com/horsicq/Detect-It-Easy).
 
-![Die1]((https://pl-v.github.io/plv//assets/Emotet-part1/Die/1.PNG){: width="700" height="300" }
+![Die1]((https://pl-v.github.io/plv/assets/Emotet-part1/Die/1.PNG){: width="700" height="300" }
 
 The status bar says that it's 91% packed and `.text` section has a high entropy,that's a strong indication that the malware is packed and we should unpack it for further analysis.
 
@@ -38,15 +38,15 @@ The status bar says that it's 91% packed and `.text` section has a high entropy,
 
 Now that we're sure that our sample is packed, let's open it in IDA and try to find the function which is responsible for unpacking. 
 
-![IDA1]((https://pl-v.github.io/plv//assets/Emotet-part1/IDA/1.PNG){: width="700" height="300" }
+![IDA1]((https://pl-v.github.io/plv/assets/Emotet-part1/IDA/1.PNG){: width="700" height="300" }
 
 Click on `Imports` to reveal all the functions used by the binary.
 
-![IDA2]((https://pl-v.github.io/plv//assets/Emotet-part1/IDA/2.PNG){: width="700" height="300" }
+![IDA2]((https://pl-v.github.io/plv/assets/Emotet-part1/IDA/2.PNG){: width="700" height="300" }
 
 Search for [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) and double click on it.
 
-![IDA3]((https://pl-v.github.io/plv//assets/Emotet-part1/IDA/3.PNG){: width="700" height="300" }
+![IDA3]((https://pl-v.github.io/plv/assets/Emotet-part1/IDA/3.PNG){: width="700" height="300" }
 
 [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) function is used two times by the same function `sub_1001AFF0`, double click on `sub_1001AFF0` and scroll down we notice that the first function called after [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) is `sub_10022C40`, so maybe we've found our unpacking function. to make sure let's open it on `Xdbg` and figure out. 
 
@@ -54,54 +54,54 @@ Search for [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/mem
 
 Open your `X32dbg` and paste and paste your sample to it.
 
-![XDBG1]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/1.PNG){: width="700" height="300" }
+![XDBG1]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/1.PNG){: width="700" height="300" }
 
 Place a breakpoint on [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) and hit run.
 
-![XDBG2]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/2.PNG){: width="700" height="300" }
+![XDBG2]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/2.PNG){: width="700" height="300" }
 
 Xdbg will keep running untill it hit the breakpoint, after  click two times on `Execute till run`. 
 
-![XDBG3]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/3.PNG){: width="700" height="300" }
+![XDBG3]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/3.PNG){: width="700" height="300" }
 
 Check the `EAX` register it contain the return adress address of the allocated memory by [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc), right click on that value and click on `Follow in Dump`.
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/4.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/4.PNG){: width="700" height="300" }
 
 As we said earlier that the function after [VirtualAlloc](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc) is responsible for unpacking, step over it and keep your eyes on the dump window at the bottom.
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/6.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/6.PNG){: width="700" height="300" }
 
 After executing `sub_10022C40` function we can finally see our unpacked malware, dump it and save it somewhere in ur machine. 
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/7.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/7.PNG){: width="700" height="300" }
 
 Right click on dump windows and `Follow in memory map`.
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/8.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/8.PNG){: width="700" height="300" }
 
 Another right click on the address of the unpacked binary then `Dump memory to file`.
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
 
 Now that we have our sample unpacked and ready for analysis let's open it in `X32dbg`. 
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
 
 It seems that our unpacked binary is missed and it should be fixed.
 ## Fixing
 
 To fix the unpacked binary there are several methods to do that, we will use `LordPE` to automate the fixing, so all we should do is to open LordPe and click on options, then uncheck `Wipe Relocation` and `Rebuild ImportTable` options,finally click on normal `OK`
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/1.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Fixing/1.PNG){: width="700" height="300" }
 
 Drag your unpacked sample to `LordPe` and it will be fixed automatically.
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/2.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Fixing/2.PNG){: width="700" height="300" }
 
 Finally open your fixed binary in `X32dbg` and notice that it's more readble right now..
 
-![XDBG4]((https://pl-v.github.io/plv//assets/Emotet-part1/Fixing/3.PNG){: width="700" height="300" }
+![XDBG4]((https://pl-v.github.io/plv/assets/Emotet-part1/Fixing/3.PNG){: width="700" height="300" }
 
 ## Reference
 
