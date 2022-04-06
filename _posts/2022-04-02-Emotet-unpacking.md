@@ -105,7 +105,7 @@ Finally open your fixed binary in `X32dbg` and notice that it's more readble rig
 
 ## Reference
 
-[](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters)
+[sss](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters)
 
 
 
