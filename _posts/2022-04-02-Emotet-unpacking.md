@@ -6,6 +6,7 @@ categories: [Reverse engeneering, Malware Analysis]
 tags: [unpacking, analysis]
 ---
 
+![CFF-Explorer3](https://pl-v.github.io/plv/assets/Emotet-part1/Emotet.jpg){: width="700" height="600" }
 
 ## Introduction
 
