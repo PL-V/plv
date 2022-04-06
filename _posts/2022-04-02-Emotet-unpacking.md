@@ -20,7 +20,7 @@ The first thing i always do before opening a sample in `IDA` or `Xdbg` is openin
 
 ![CFF-Explorer1](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/1.PNG){: width="400" height="400" }
 
-Let's check import section,The malware use one library which is `Kernel32` that's the first sign which indicate that we're dealing with packed binary.
+Let's check import section,The malware use only one library which is `Kernel32` that's the first sign which indicate that we're dealing with packed binary.
 
 ![CFF-Explorer3](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="1200" }
 
@@ -74,7 +74,7 @@ As we said earlier that the function after [VirtualAlloc](https://docs.microsoft
 
 ![XDBG4](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/6.PNG){: width="700" height="300" }
 
-After executing `sub_10022C40` function we can finally see our unpacked malware, dump it and save it somewhere in ur machine. 
+After executing `sub_10022C40` function we can finally see our unpacked malware, dump it and save it somewhere in your machine. 
 
 ![XDBG4](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/7.PNG){: width="700" height="300" }
 
