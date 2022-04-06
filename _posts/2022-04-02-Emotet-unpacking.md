@@ -107,7 +107,7 @@ Finally open your fixed binary in `X32dbg` and notice that it's more readble rig
 
 ## Reference
 
-[New Emotet 11/2021 - Reverse Engineering VBA Obfuscation + Unpacking](https://www.reverse-engineer.net/view/courses/training/329541-new-emotet-11-2021-reverse-engineering-vba-obfuscation-unpacking-emotet)
+1. [New Emotet 11/2021 - Reverse Engineering VBA Obfuscation + Unpacking](https://www.reverse-engineer.net/view/courses/training/329541-new-emotet-11-2021-reverse-engineering-vba-obfuscation-unpacking-emotet)
 
 
-[How to Unpack Malware with x64dbg](https://www.varonis.com/blog/x64dbg-unpack-malware)
+2. [How to Unpack Malware with x64dbg](https://www.varonis.com/blog/x64dbg-unpack-malware)
