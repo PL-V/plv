@@ -20,7 +20,7 @@ The first thing i always do before opening a sample in IDA or Xdbg is opening th
 
 Let's check import section,The malware use one library which is `Kernel32` that's the first sign which indicate that we're dealing with packed binary.
 
-![CFF-Explorer3](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="600" }
+![CFF-Explorer3](https://pl-v.github.io/plv/assets/Emotet-part1/Hex-View/3.PNG){: width="700" height="1200" }
 
 Two intersting API functions are used:
 
