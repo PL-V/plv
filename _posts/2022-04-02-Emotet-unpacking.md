@@ -3,7 +3,7 @@ title: "EmotetAnalysis Part 1: Unpacking"
 author: Player-V
 date: 2022-04-02 02:26:00 -0500
 categories: [Reverse engeneering, Malware Analysis]
-tags: [unpacking, analysis]
+tags: [unpacking]
 ---
 
 ![CFF-Explorer3](https://pl-v.github.io/plv/assets/Emotet-part1/Emotet.jpg){: width="700" height="600" }
