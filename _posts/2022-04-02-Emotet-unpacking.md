@@ -93,7 +93,7 @@ Now that we have our sample unpacked and ready for analysis let's open it in `X3
 It seems that our unpacked binary is missed and it should be fixed.
 ## Fixing
 
-To fix the unpacked binary there are several methods to do that, we will use `LordPE` to automate the fixing, so all we should do is to open LordPe and click on options, then uncheck `Wipe Relocation` and `Rebuild ImportTable` options, finally click on `normal` then `OK`
+To fix the unpacked binary there are several methods to do that, we will use `LordPE` to automate the fixing, so all we should do is to open LordPe and click on options, then uncheck `Wipe Relocation` and `Rebuild ImportTable` options, finally click on `normal` then `OK`.
 
 ![XDBG4](https://pl-v.github.io/plv/assets/Emotet-part1/Fixing/1.PNG){: width="700" height="300" }
 
