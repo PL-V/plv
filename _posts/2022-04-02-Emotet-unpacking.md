@@ -88,7 +88,7 @@ Another right click on the address of the unpacked binary then `Dump memory to f
 
 Now that we have our sample unpacked and ready for analysis let's open it in `X32dbg`. 
 
-![XDBG4](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/9.PNG){: width="700" height="300" }
+![XDBG4](https://pl-v.github.io/plv/assets/Emotet-part1/Xdbg/10.PNG){: width="700" height="300" }
 
 It seems that our unpacked binary is missed and it should be fixed.
 ## Fixing
