@@ -106,11 +106,11 @@
         </div><div class="featured-image"><img
         class="lazyload"
         src="/plv/svg/loading.min.svg"
-        data-src="plv/images/Diagram.png"
-        data-srcset="plv/images/Diagram.png, plv/images/Diagram.png 1.5x, plv/images/Diagram.png 2x"
+        data-src="/plv/images/Diagram.png"
+        data-srcset="/plv/images/Diagram.png, /plv/images/Diagram.png 1.5x, /plv/images/Diagram.png 2x"
         data-sizes="auto"
-        alt="plv/images/Diagram.png"
-        title="plv/images/Diagram.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+        alt="/plv/images/Diagram.png"
+        title="/plv/images/Diagram.png" /></div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
@@ -192,12 +192,12 @@
 <p>To detect CreateRemoteThread API calls, you&rsquo;ll need to install and configure Sysmon on your Windows machine. Let&rsquo;s download the tool and set it up according to our requirements. Download the tool from Microsoft <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon" target="_blank" rel="noopener noreffer ">here</a>, unzip the file anywhere on your machine. Download the configration file from <a href="https://wazuh.com/resources/blog/detecting-process-injection-with-wazuh/sysmonconfig.xml" target="_blank" rel="noopener noreffer ">here</a>, and execute the following command <strong>(as administrator)</strong> to install the Sysmon driver:</p>
 <pre tabindex="0"><code class="language-Terminal" data-lang="Terminal">&gt; sysmon64.exe -accepteula -i .\sysmonconfig.xml</code></pre>
 <p>Once Sysmon is installed and configured, let&rsquo;s test it using SysmonSimulator. With SysmonSimulator, we can simulate various attacks using WINAPIs to generate the necessary logs for detection.</p>
-<figure><img src="plv/images/Post_1/SysmonSimulator.png">
+<figure><img src="/plv/images/Post_1/SysmonSimulator.png">
 </figure>
 
 <p>The CreateRemoteThread event id is 8, to simulate the API call we need to execute the following command :
 <pre tabindex="0"><code class="language-Terminal" data-lang="Terminal">&gt; SysmonSimulator.exe -eid 8</code></pre>
-<figure><img src="plv/images/Post_1/SysmonSimulator_CreateRemoteThread.png">
+<figure><img src="/plv/images/Post_1/SysmonSimulator_CreateRemoteThread.png">
 </figure>
 </p>
 <p>Great! As shown in the screenshot above, we&rsquo;eve successfully generated the logs related to CreateRemoteThread, and as you can see that Sysmon labeled it as a Process Injection Technique.</p>
@@ -208,7 +208,7 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;log_format&gt;</span>eventchannel<span class="nt">&lt;/log_format&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/localfile&gt;</span></span></span></code></pre></div>
 <p>To add your rules in Wazuh you can either add it to the file on your wazuh manger <code>ossec/etc/rules/local_rules.xml</code>, or add it trough your wazuh-indexer(kibana) like shown in the picture below:</p>
-<figure><img src="plv/images/Post_1/Rule.png">
+<figure><img src="/plv/images/Post_1/Rule.png">
 </figure>
 
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&#34;windows,sysmon&#34;</span><span class="nt">&gt;</span>
@@ -227,7 +227,7 @@
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;/rule&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/group&gt;</span></span></span></code></pre></div>
 <p>Don&rsquo;t forget to restart the Wazuh manager to apply the changes. Let&rsquo;s test the rule and check if it&rsquo;s working fine. Run SysmonSimulator, and you should see something similar to the image below.</p>
-<figure><img src="plv/images/Post_1/Process_Injection.png">
+<figure><img src="/plv/images/Post_1/Process_Injection.png">
 </figure>
 
 <h1 id="6-setting-up-all-pieces-together">6. Setting up all pieces together</h1>
@@ -326,7 +326,7 @@
 </table>
 <h1 id="6-test-the-rule">6. Test the rule</h1>
 <p>Now that everything is ready and set up, let&rsquo;s test our rule to see if it&rsquo;s working. For the test, I&rsquo;ll be using the SysmonSimulator tool to trigger the CreateRemoteThread API. Afterward, we&rsquo;ll run ElastAlert to detect the API call and send the results to TheHive. If everything is well set up you should promptly receive an alert notification within TheHive, as depicted in the accompanying screenshot.</p>
-<figure><img src="plv/images/Post_1/TheHive.png">
+<figure><img src="/plv/images/Post_1/TheHive.png">
 </figure>
 
 <h1 id="-references"># References</h1>
@@ -343,7 +343,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-via="AmAPlayeer" data-hashtags="Security Operations,Detection engineering,Malware"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-hashtag="Security Operations"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i data-svg-src="/plv/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-image="plv/images/Diagram.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-via="AmAPlayeer" data-hashtags="Security Operations,Detection engineering,Malware"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-hashtag="Security Operations"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i data-svg-src="/plv/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-image="/plv/images/Diagram.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
