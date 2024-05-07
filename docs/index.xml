@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>My New Hugo Site</title>
-        <link>https://plv.github.io/</link>
+        <link>https://pl-v.github.io/</link>
         <description>This is my cool site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>hamzasellak123@gmail.com (PL-V)</managingEditor>
             <webMaster>hamzasellak123@gmail.com (PL-V)</webMaster><lastBuildDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</lastBuildDate>
-            <atom:link href="https://plv.github.io/index.xml" rel="self" type="application/rss+xml" />
+            <atom:link href="https://pl-v.github.io/index.xml" rel="self" type="application/rss+xml" />
         </channel>
 </rss>
