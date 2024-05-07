@@ -6,6 +6,7 @@ theme = "LoveIt"
 # website title
 title = "PL-V"
 
+publishDir="docs"
 
 # language code ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "en"
