@@ -1,10 +1,20 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>My New Hugo Site</title>
-        <link>https://plv.github.io/</link>
+        <link>http://localhost:1313/</link>
         <description>This is my cool site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>hamzasellak123@gmail.com (PL-V)</managingEditor>
             <webMaster>hamzasellak123@gmail.com (PL-V)</webMaster><lastBuildDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</lastBuildDate>
-            <atom:link href="https://plv.github.io/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Detect DLL Injection using Wazuh &#43; Elastalert</title>
+    <link>http://localhost:1313/posts/about/</link>
+    <pubDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</pubDate>
+    <author>PL-V</author>
+    <guid>http://localhost:1313/posts/about/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/Diagram.png" referrerpolicy="no-referrer">
+            </div>1. Introduction While working with WAZUH, I noticed it boasts over 3,000 rules as stated on their official website. With such extensive coverage, I decided to put these rules to the test. I chose the DLL Injection technique from the MITRE ATT&amp;CK Framework and set up the necessary elements to launch the attack. However, WAZUH failed to detect anything related to the that, despite the abundance of predefined rules. Detecting such sophisticated attacks requires the creation of custom rules.]]></description>
+</item>
+</channel>
 </rss>
