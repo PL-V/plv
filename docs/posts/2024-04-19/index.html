@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/plv/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=plv/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Detect DLL Injection using Wazuh &#43; Elastalert - My New Hugo Site</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="Detect DLL Injection using Wazuh &#43; Elastalert" />
+<meta property="og:description" content="1. Introduction While working with WAZUH, I noticed it boasts over 3,000 rules as stated on their official website. With such extensive coverage, I decided to put these rules to the test. I chose the DLL Injection technique from the MITRE ATT&amp;CK Framework and set up the necessary elements to launch the attack. However, WAZUH failed to detect anything related to the that, despite the abundance of predefined rules. Detecting such sophisticated attacks requires the creation of custom rules." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/plv/posts/2024-04-19/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-04-19T00:00:00+00:00" /><meta property="og:site_name" content="My cool site" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Detect DLL Injection using Wazuh &#43; Elastalert"/>
+<meta name="twitter:description" content="1. Introduction While working with WAZUH, I noticed it boasts over 3,000 rules as stated on their official website. With such extensive coverage, I decided to put these rules to the test. I chose the DLL Injection technique from the MITRE ATT&amp;CK Framework and set up the necessary elements to launch the attack. However, WAZUH failed to detect anything related to the that, despite the abundance of predefined rules. Detecting such sophisticated attacks requires the creation of custom rules."/>
+      <meta name="twitter:site" content="@AmAPlayeer"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/plv/posts/2024-04-19/" /><link rel="stylesheet" href="/plv/css/style.min.css"><link rel="preload" href="/plv/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/plv/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/plv/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/plv/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Detect DLL Injection using Wazuh + Elastalert",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/plv\/posts\/2024-04-19\/"
+        },"genre": "posts","keywords": "Security Operations, Detection engineering, Malware","wordcount":  1568 ,
+        "url": "http:\/\/localhost:1313\/plv\/posts\/2024-04-19\/","datePublished": "2024-04-19T00:00:00+00:00","dateModified": "2024-04-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "PL-V"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/plv/" title="My New Hugo Site">PL-V</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/plv/posts/"> Posts </a><a class="menu-item" href="/plv/tags/"> Tags </a><a class="menu-item" href="/plv/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/plv/" title="My New Hugo Site">PL-V</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/plv/posts/" title="">Posts</a><a class="menu-item" href="/plv/tags/" title="">Tags</a><a class="menu-item" href="/plv/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Detect DLL Injection using Wazuh + Elastalert</h1><h2 class="single-subtitle">MITRE Att&amp;ck techniques Detections</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/plv/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>PL-V</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-19">2024-04-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1568 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/plv/svg/loading.min.svg"
+        data-src="plv/images/Diagram.png"
+        data-srcset="plv/images/Diagram.png, plv/images/Diagram.png 1.5x, plv/images/Diagram.png 2x"
+        data-sizes="auto"
+        alt="plv/images/Diagram.png"
+        title="plv/images/Diagram.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><h1 id="1-introduction">1. Introduction</h1>
+<p>While working with WAZUH, I noticed it boasts over 3,000 rules as stated on their official website. With such extensive coverage, I decided to put these rules to the test. I chose the DLL Injection technique from the MITRE ATT&amp;CK Framework and set up the necessary elements to launch the attack. However, WAZUH failed to detect anything related to the that, despite the abundance of predefined rules. Detecting such sophisticated attacks requires the creation of custom rules. In this blog, I will cover everything necessary to detect these types of attacks using WAZUH and forward the generated alerts to your incident and response management solution. So grab your coffee and your laptop, and let&rsquo;s get started.</p>
+<div class="details admonition tip">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw" aria-hidden="true"></i>Tools used<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><table>
+<thead>
+<tr>
+<th style="text-align:center">Tool</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon" target="_blank" rel="noopener noreffer ">Sysmon</a></td>
+<td style="text-align:right">Monitors and reports key system activity via the Windows event log.</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://elastalert.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener noreffer ">Ealstalert</a></td>
+<td style="text-align:right">Alerting on anomalies, spikes, or other patterns of interest from data in Elasticsearch.</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://thehive-project.org/" target="_blank" rel="noopener noreffer ">Thehive</a></td>
+<td style="text-align:right">Security Incident Response Platform, serving as a vital tool for Security Operations Centers</td>
+</tr>
+</tbody>
+</table>
+</div>
+        </div>
+    </div>
+<h1 id="2-dll-injection-in-a-nutshell">2. DLL Injection in a nutshell</h1>
+<p>What is DLL injection? In essence, <a href="https://attack.mitre.org/techniques/T1055/001/" target="_blank" rel="noopener noreffer ">DLL injection</a> is a common techniques employed in malware and fileless adversary tradecraft to circumvent defenses. It entails the insertion of malicious code into running processes by coercing them to load external dynamic link libraries. These injected DLLs facilitate the execution of arbitrary code within the target process, granting attackers the ability to manipulate its behavior, extract sensitive data, or escalate privileges. I requested ChatGPT to outline the steps for implementing a custom DLL injection technique, and the provided details are quite accurate.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>DLL injection Implementation (by chatgpt)<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ol>
+<li>
+<p><strong>Identify the Target Process</strong>: Choose the process into which you want to inject the DLL. This could be any running process on the system.</p>
+</li>
+<li>
+<p><strong>Create or Obtain the DLL</strong>: Develop or acquire the DLL that contains the malicious code you want to inject into the target process. This DLL typically includes functions or payloads designed to carry out specific actions within the target process.</p>
+</li>
+<li>
+<p><strong>Choose Injection Technique</strong>: Select an appropriate DLL injection technique based on factors such as stealth, privilege level required, and compatibility with the target system.</p>
+</li>
+<li>
+<p><strong>Inject the DLL</strong>: Execute the chosen injection technique to insert the DLL into the target process. This typically involves invoking system functions or API calls to allocate memory, write the DLL path or binary into the target process&rsquo;s memory space, and trigger the execution of the DLL code.</p>
+</li>
+<li>
+<p><strong>Execute Malicious Code</strong>: Once the DLL is successfully injected into the target process, the malicious code within the DLL gains execution privileges within the context of that process. This code can then carry out its intended actions, such as modifying process memory, intercepting system calls, or communicating with external servers.</p>
+</li>
+<li>
+<p><strong>Handle Errors and Clean Up</strong>: Implement error handling mechanisms to deal with potential failures during the injection process, such as insufficient permissions or invalid memory addresses. After executing the malicious code, clean up any resources or memory allocated during the injection process to avoid detection and maintain stealth.</p>
+</li>
+</ol>
+</div>
+        </div>
+    </div>
+<p>I won&rsquo;t detail or code the steps mentioned by ChatGPT, as this blog assumes that the reader already possesses a basic understanding of DLL injection. If not, there are numerous resources available on the internet that delve into DLL injection in depth. You can also find several proof-of-concept (POC) examples on GitHub. I recommend checking out the following blog post by <a href="https://www.crow.rip/crows-nest" target="_blank" rel="noopener noreffer ">crow</a>, which covers almost everything about the technique from zero to hero.</p>
+<h1 id="3-dll-injection-artifacts">3. DLL injection artifacts</h1>
+<p>To detect any technique using Wazuh basically we need to think of what this technique triggers when it get executed in the victim machine,  Does it drop any files onto the disk? Which registry keys does it modify or create? What API calls are utilized to accomplish the task? etc&hellip; By considering these factors, you can identify various indicators to detect the technique&rsquo;s execution and consolidate them into your own detection rule. For instance, in the case of DLL injection, analyzing the technique&rsquo;s events may reveal specific API calls being used by the technique, such as :</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess" target="_blank" rel="noopener noreffer "><div id="id-1"><strong>OpenProcess</strong></div></a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualallocex" target="_blank" rel="noopener noreffer "><div id="id-2"><strong>VirtualAllocEx</strong></div></a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory" target="_blank" rel="noopener noreffer "><div id="id-3"><strong>WriteProcessMemory</strong></div></a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createremotethread" target="_blank" rel="noopener noreffer "><div id="id-4"><strong>CreateRemoteThread</strong></div></a></li>
+</ul>
+<p>Triggering these API calls doesn&rsquo;t always signal a DLL injection attempt. Determining if it&rsquo;s an attack requires careful consideration of several factors, like identifying the process initiating an OpenProcess call. Is the process already known? What permissions does it seek over the target process? Similarly, with a WriteProcessMemory call, it&rsquo;s crucial to scrutinize the data being written into the target process. The most accurate detection method is monitoring CreateRemoteThread, as other API calls may require deeper investigation to distinguish false positives from true attacks when you receive an alert. Likely there is a tool called <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon" target="_blank" rel="noopener noreffer ">Sysmon</a> which is a great tool that logs system activity to the Windows event log. It provides detailed information about process creation, network connections, file creation, registry changes, and more. Leveraging Sysmon, we can effectively detect DLL injection attempts and enhance our security posture.</p>
+<h1 id="4-sysmon-configuration">4. Sysmon Configuration</h1>
+<p>To detect CreateRemoteThread API calls, you&rsquo;ll need to install and configure Sysmon on your Windows machine. Let&rsquo;s download the tool and set it up according to our requirements. Download the tool from Microsoft <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon" target="_blank" rel="noopener noreffer ">here</a>, unzip the file anywhere on your machine. Download the configration file from <a href="https://wazuh.com/resources/blog/detecting-process-injection-with-wazuh/sysmonconfig.xml" target="_blank" rel="noopener noreffer ">here</a>, and execute the following command <strong>(as administrator)</strong> to install the Sysmon driver:</p>
+<pre tabindex="0"><code class="language-Terminal" data-lang="Terminal">&gt; sysmon64.exe -accepteula -i .\sysmonconfig.xml</code></pre>
+<p>Once Sysmon is installed and configured, let&rsquo;s test it using SysmonSimulator. With SysmonSimulator, we can simulate various attacks using WINAPIs to generate the necessary logs for detection.</p>
+<figure><img src="plv/images/Post_1/SysmonSimulator.png">
+</figure>
+
+<p>The CreateRemoteThread event id is 8, to simulate the API call we need to execute the following command :
+<pre tabindex="0"><code class="language-Terminal" data-lang="Terminal">&gt; SysmonSimulator.exe -eid 8</code></pre>
+<figure><img src="plv/images/Post_1/SysmonSimulator_CreateRemoteThread.png">
+</figure>
+</p>
+<p>Great! As shown in the screenshot above, we&rsquo;eve successfully generated the logs related to CreateRemoteThread, and as you can see that Sysmon labeled it as a Process Injection Technique.</p>
+<h1 id="5-wazuh-configuration">5. Wazuh Configuration</h1>
+<p>Now that we have our sysmon up and ready we need to configure Wazuh to collect sysmon logs from event viewer and write our detection rule. We need to edit the file ossec.conf and add the following to tell Wazuh to collect sysmon logs :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;localfile&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;location&gt;</span>Microsoft-Windows-Sysmon/Operational<span class="nt">&lt;/location&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;log_format&gt;</span>eventchannel<span class="nt">&lt;/log_format&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/localfile&gt;</span></span></span></code></pre></div>
+<p>To add your rules in Wazuh you can either add it to the file on your wazuh manger <code>ossec/etc/rules/local_rules.xml</code>, or add it trough your wazuh-indexer(kibana) like shown in the picture below:</p>
+<figure><img src="plv/images/Post_1/Rule.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&#34;windows,sysmon&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;rule</span> <span class="na">id=</span><span class="s">&#34;100200&#34;</span> <span class="na">level=</span><span class="s">&#34;12&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;if_sid&gt;</span>61610<span class="nt">&lt;/if_sid&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;description&gt;</span>Possible process injection activity detected from &#34;$(win.eventdata.sourceImage)&#34; on &#34;$(win.eventdata.targetImage)&#34;<span class="nt">&lt;/description&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;mitre&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;id&gt;</span>T1055.001<span class="nt">&lt;/id&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/mitre&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/rule&gt;</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;rule</span> <span class="na">id=</span><span class="s">&#34;100100&#34;</span> <span class="na">level=</span><span class="s">&#34;0&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;if_sid&gt;</span>100200<span class="nt">&lt;/if_sid&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&#34;win.eventdata.sourceImage&#34;</span> <span class="na">type=</span><span class="s">&#34;pcre2&#34;</span><span class="nt">&gt;</span>(C:\\\\Windows\\\\system32)|chrome.exe<span class="nt">&lt;/field&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;description&gt;</span>Ignore Windows binaries and Chrome<span class="nt">&lt;/description&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/rule&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/group&gt;</span></span></span></code></pre></div>
+<p>Don&rsquo;t forget to restart the Wazuh manager to apply the changes. Let&rsquo;s test the rule and check if it&rsquo;s working fine. Run SysmonSimulator, and you should see something similar to the image below.</p>
+<figure><img src="plv/images/Post_1/Process_Injection.png">
+</figure>
+
+<h1 id="6-setting-up-all-pieces-together">6. Setting up all pieces together</h1>
+<p>After successfully detecting the CreateRemoteThread API call using Wazuh and Sysmon, let&rsquo;s create an ElastAlert rule. This rule will send an alert to TheHive to notify us whenever there is an attempt of DLL injection. In practice, it&rsquo;s impractical to monitor all the time through the Wazuh dashboard, as the number of alerts is significant. You can&rsquo;t keep an eye on everything, so you&rsquo;ll need to sort the alerts you receive and deal with the pertinent ones. If you don&rsquo;t have ElastAlert installed already download it from <a href="https://elastalert.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer ">here</a>.The ElastAlert documentation provides comprehensive guidance on setting up and installing the tool. Once installed, navigate to the rules directory, create a new file, and name it what ever you want. Then, insert the following rule:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">es_host</span><span class="p">:</span><span class="w"> </span><span class="l">elastic_instance_ip</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">es_port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Wazuh Alert - DLL Injection Attempt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">frequency</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l">wazuh-alerts-*</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">num_events</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">timeframe</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">minutes</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">filter</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">query_string</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;(rule.mitre.id : T1055.001) AND (rule.mitre.technique: Dynamic-link*Library*Injection)&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">realert</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">minutes</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l">hivealerter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">hive_connection</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hive_host</span><span class="p">:</span><span class="w"> </span><span class="l">http://thehive_instance_ip</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hive_port</span><span class="p">:</span><span class="w"> </span><span class="m">9000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hive_apikey</span><span class="p">:</span><span class="w"> </span><span class="l">thehive_api_key</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">hive_alert_config</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;[Critical], [{0}] , [Possible process injection activity detected]&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title_args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">agent.ip]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;external&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;wazuh&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description_args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">rule.description]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">customFields</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">rule-name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.eventdata.ruleName</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">source-ip</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">agent.ip</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">username</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.eventdata.sourceUser</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">source-process</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.eventdata.sourceImage</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">target-process</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.eventdata.targetImage</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">computer-name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.system.computer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">event-id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">data.win.system.eventRecordID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="s2">&#34;Process Injection&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="s2">&#34;DLL injection&#34;</span></span></span></code></pre></div>
+<p>The rule above queries events containing the attribute <strong>rule.mitre.id</strong> with the value <strong>T1055.001</strong> and <strong>rule.mitre.technique</strong> with the value <strong>Dynamic-link Library Injection</strong>. When such an event is detected, ElastAlert triggers a notification to TheHive incident management platform.The table below contain details on the rule&rsquo;s remaining elements:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Element</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:right">The name of your elastalert rule.</td>
+</tr>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:right">For further details about the different possible types, please refer <a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#rule-types" target="_blank" rel="noopener noreffer ">here</a>.</td>
+</tr>
+<tr>
+<td style="text-align:center">num_events</td>
+<td style="text-align:right">The number of events which will trigger an alert.</td>
+</tr>
+<tr>
+<td style="text-align:center">realert</td>
+<td style="text-align:right">This option allows you to ignore repeating alerts for a period of time.</td>
+</tr>
+<tr>
+<td style="text-align:center">alert</td>
+<td style="text-align:right">The Alerter type to use. In our case we want to send alerts to Thehive.</td>
+</tr>
+<tr>
+<td style="text-align:center">hive_connection</td>
+<td style="text-align:right">The connection details of your Thehive instance (IP,port,api_key).</td>
+</tr>
+<tr>
+<td style="text-align:center">hive_alert_config</td>
+<td style="text-align:right">Configuration options for customizing the alerts displayed in TheHive platform.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="6-test-the-rule">6. Test the rule</h1>
+<p>Now that everything is ready and set up, let&rsquo;s test our rule to see if it&rsquo;s working. For the test, I&rsquo;ll be using the SysmonSimulator tool to trigger the CreateRemoteThread API. Afterward, we&rsquo;ll run ElastAlert to detect the API call and send the results to TheHive. If everything is well set up you should promptly receive an alert notification within TheHive, as depicted in the accompanying screenshot.</p>
+<figure><img src="plv/images/Post_1/TheHive.png">
+</figure>
+
+<h1 id="-references"># References</h1>
+<ul>
+<li><a href="https://rootdse.org/posts/understanding-sysmon-events/" target="_blank" rel="noopener noreffer ">Understanding Sysmon Events using SysmonSimulator</a></li>
+<li><a href="https://wazuh.com/blog/detecting-process-injection-attacks-with-wazuh/" target="_blank" rel="noopener noreffer ">Detecting process injection attacks with Wazuh</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-via="AmAPlayeer" data-hashtags="Security Operations,Detection engineering,Malware"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-hashtag="Security Operations"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert"><i data-svg-src="/plv/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/plv/posts/2024-04-19/" data-title="Detect DLL Injection using Wazuh &#43; Elastalert" data-image="plv/images/Diagram.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/plv/tags/security-operations/">Security Operations</a>,&nbsp;<a href="/plv/tags/detection-engineering/">Detection Engineering</a>,&nbsp;<a href="/plv/tags/malware/">Malware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/plv/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/plv/" target="_blank">PL-V</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/plv/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/plv/css/d51e58.min.css"><script type="text/javascript" src="/plv/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/plv/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/plv/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/plv/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/plv/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="/plv/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="/plv/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/plv/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30}};</script><script type="text/javascript" src="/plv/js/theme.min.js"></script></body>
+</html>
