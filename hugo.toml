@@ -60,7 +60,7 @@ languageName = "English"
       # Gravatar Email for preferred avatar in home page
       gravatarEmail = ""
       # URL of avatar shown in home page
-      avatarURL = "/images/avatar.png"
+      avatarURL = "/plv/images/avatar.png"
       # LoveIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
       title = ""
       # subtitle shown in home page (HTML format is supported)
