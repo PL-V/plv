@@ -1,32 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - My New Hugo Site</title>
-        <link>http://localhost:1313/tags/</link>
+        <link>http://plv.github.io/tags/</link>
         <description>Tags - Tag - My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>hamzasellak123@gmail.com (PL-V)</managingEditor>
-            <webMaster>hamzasellak123@gmail.com (PL-V)</webMaster><lastBuildDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>Detection Engineering</title>
-    <link>http://localhost:1313/tags/detection-engineering/</link>
-    <pubDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</pubDate>
-    <author>PL-V</author>
-    <guid>http://localhost:1313/tags/detection-engineering/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Malware</title>
-    <link>http://localhost:1313/tags/malware/</link>
-    <pubDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</pubDate>
-    <author>PL-V</author>
-    <guid>http://localhost:1313/tags/malware/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Security Operations</title>
-    <link>http://localhost:1313/tags/security-operations/</link>
-    <pubDate>Fri, 19 Apr 2024 00:00:00 &#43;0000</pubDate>
-    <author>PL-V</author>
-    <guid>http://localhost:1313/tags/security-operations/</guid>
-    <description><![CDATA[]]></description>
-</item>
-</channel>
+            <webMaster>hamzasellak123@gmail.com (PL-V)</webMaster><atom:link href="http://plv.github.io/tags/" rel="self" type="application/rss+xml" /></channel>
 </rss>
