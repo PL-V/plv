@@ -1,0 +1,7 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Catégorie - Mon nouveau site Hugo</title>
+        <link>http://localhost:1313/fr/categories/</link>
+        <description>Categories - Catégorie - Mon nouveau site Hugo</description>
+        <generator>Hugo -- gohugo.io</generator><language>fr</language><atom:link href="http://localhost:1313/fr/categories/" rel="self" type="application/rss+xml" /></channel>
+</rss>
