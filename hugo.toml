@@ -2,7 +2,7 @@ baseURL = "http://plv.github.io/"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
-
+publishdir = 'docs'
 # website title
 title = "PL-V"
 
